@@ -1,0 +1,94 @@
+swagger: '2.0'
+info:
+  description: Documentation de l'API de prédiction
+  version: 1.0.0
+  title: API de Prédiction
+host: 'localhost:5000'
+schemes:
+  - http
+paths:
+  /predict:
+    post:
+      tags:
+        - Prédiction
+      summary: Prédire les résultats basés sur les caractéristiques
+      description: Cette API prend un ensemble de caractéristiques en entrée et retourne une prédiction avec les probabilités associées.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Les caractéristiques d'entrée pour la prédiction dans l'ordre prédéfini
+          required: true
+          schema:
+            type: object
+            properties:
+              features:
+                type: object
+                properties:
+                  age:
+                    type: number
+                    default: 0
+                  sexe:
+                    type: number
+                    default: 0
+                  polyurie:
+                    type: number
+                    default: 0
+                  polydipsie:
+                    type: number
+                    default: 0
+                  perte_de_poids_soudaine:
+                    type: number
+                    default: 0
+                  faiblesse:
+                    type: number
+                    default: 0
+                  polyphagie:
+                    type: number
+                    default: 0
+                  vision_floue:
+                    type: number
+                    default: 0
+                  obesite:
+                    type: number
+                    default: 0
+                  diabete_parental:
+                    type: number
+                    default: 0
+                  tabagisme:
+                    type: number
+                    default: 0
+                  hypertension:
+                    type: number
+                    default: 0
+                  glycemie_eleve:
+                    type: number
+                    default: 0
+                  activites_physique:
+                    type: number
+                    default: 0
+      responses:
+        200:
+          description: Résultat de la prédiction
+          schema:
+            type: object
+            properties:
+              prediction:
+                type: integer
+              probability:
+                type: object
+                properties:
+                  class_0:
+                    type: number
+                  class_1:
+                    type: number
+        400:
+          description: Message d'erreur
+          schema:
+            type: object
+            properties:
+              error:
+                type: string

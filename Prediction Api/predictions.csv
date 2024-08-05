@@ -1,0 +1,5 @@
+age,sexe,polyurie,polydipsie,perte_de_poids_soudaine,faiblesse,polyphagie,vision_floue,obesite,diabete_parental,tabagisme,hypertension,glycemie_eleve,activites_physique,prediction,probability_class_0,probability_class_1
+61,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0.9833333333333334,0.016666666666666666
+61,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0.9833333333333334,0.016666666666666666
+61,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0.9833333333333334,0.016666666666666666
+23,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0.8099999999999998,0.19
