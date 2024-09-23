@@ -16,9 +16,15 @@ ns = api.namespace('predict', description='Opérations de prédiction')
 
 
 # Charger le modèle, le scaler pour l'âge et les noms des colonnes
+<<<<<<< HEAD
 model = joblib.load('Random_Forest_model_new.pkl')
 scaler_age = joblib.load('scaler_age_new.pkl')
 columns = joblib.load('colonnes.pkl')
+=======
+model = joblib.load('Random Forest_model1.pkl')
+scaler_age = joblib.load('scaler_age_new2.pkl')
+columns = joblib.load('columns.pkl')
+>>>>>>> 0421a81fa7cc0d44fe6c801b56484b418d9da7b4
 
 # Initialiser l'engin de recommandation
 recommendation_engine = RecommendationEngine()
@@ -53,7 +59,12 @@ class Predict(Resource):
             # Charger les données d'entrée
             data = request.get_json(force=True)
             if 'features' not in data or len(data['features']) != len(columns):
+<<<<<<< HEAD
                return make_response(jsonify({"error": f"Les caractéristiques doivent contenir les éléments suivants: {columns}"}), 400)
+=======
+                return make_response(jsonify({"error": f"Les caractéristiques doivent contenir les éléments suivants: {columns}"}), 400)
+
+>>>>>>> 0421a81fa7cc0d44fe6c801b56484b418d9da7b4
             input_data = data['features']
             # Forcer la conversion en entiers
             input_data = [int(x) for x in input_data]
@@ -88,7 +99,11 @@ class Predict(Resource):
                 "recommendations": recommendations
             }
 
+<<<<<<< HEAD
             return make_response(jsonify(result),200)
+=======
+            return make_response(jsonify(result))
+>>>>>>> 0421a81fa7cc0d44fe6c801b56484b418d9da7b4
 
         except Exception as e:
             return make_response(jsonify({"error": str(e)}), 400)
