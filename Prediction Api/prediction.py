@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,make_response
 from flask_restx import Api, Resource, fields
 import joblib
 import pandas as pd
@@ -15,8 +15,8 @@ api = Api(app, version='1.0', title='Diabetes Prediction API',
 ns = api.namespace('predict', description='Predictions operations')
 
 # Charger le modèle, le scaler pour l'âge et les noms des colonnes
-model = joblib.load('Random_Forest_model.pkl')
-scaler_age = joblib.load('scaler_age_new.pkl')
+model = joblib.load('Random Forest_model1.pkl')
+scaler_age = joblib.load('scaler_age_new2.pkl')
 columns = joblib.load('columns.pkl')
 
 # Initialiser l'engin de recommandation
@@ -52,7 +52,7 @@ class Predict(Resource):
             # Charger les données d'entrée
             data = request.get_json(force=True)
             if 'features' not in data or len(data['features']) != len(columns):
-                return jsonify({"error": f"Les caractéristiques doivent contenir les éléments suivants: {columns}"}), 400
+                return make_response(jsonify({"error": f"Les caractéristiques doivent contenir les éléments suivants: {columns}"}), 400)
 
             input_data = data['features']
 
@@ -90,10 +90,10 @@ class Predict(Resource):
                 "recommendations": recommendations
             }
 
-            return jsonify(result)
+            return make_response(jsonify(result))
 
         except Exception as e:
-            return jsonify({"error": str(e)}), 400
+            return make_response(jsonify({"error": str(e)}), 400)
 
 @ns.route('/results')
 class Results(Resource):
