@@ -12,9 +12,9 @@ app = Flask(__name__)
 
 
 # Charger le modèclsle, le scaler pour l'âge et les noms des colonnes
-model = joblib.load('random_forest_model.pkl')
-scaler_age = joblib.load('scaler_age.pkl')
-columns = joblib.load('colonnes.pkl')
+model = joblib.load('Prediction Api/Random_Forest_model_new.pkl')
+scaler_age = joblib.load('Prediction Api/scaler_age_new.pkl')
+columns = joblib.load('Prediction Api/colonnes.pkl')
 
 # Initialiser l'engin de recommandation
 recommendation_engine = RecommendationEngine()
@@ -83,7 +83,7 @@ def predict():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
-    
+
 @app.route('/results', methods=['GET'])
 def get_results():
     """
@@ -95,7 +95,7 @@ def get_results():
         return df.to_json(orient='records')
     else:
         return jsonify({"error": "Le fichier predictions.csv n'existe pas encore."}), 404
-    
+
 
 @app.route('/stats', methods=['GET'])
 def get_stats():
@@ -108,13 +108,13 @@ def get_stats():
         total_predictions = df.shape[0]
         class_0_count = df[df['prediction'] == 0].shape[0]
         class_1_count = df[df['prediction'] == 1].shape[0]
-        
+
         # Generate a pie chart
         labels = 'Class 0', 'Class 1'
         sizes = [class_0_count, class_1_count]
         colors = ['lightblue', 'lightcoral']
         explode = (0.1, 0)  # explode 1st slice
-        
+
         plt.figure(figsize=(6, 6))
         plt.pie(sizes, explode=explode, labels=labels, colors=colors,
                 autopct='%1.1f%%', shadow=True, startangle=140)

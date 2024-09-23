@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,make_response
 from flask_restx import Api, Resource, fields
 import joblib
 import pandas as pd
@@ -9,22 +9,23 @@ import os
 from recommendation_engine import RecommendationEngine
 
 app = Flask(__name__)
-api = Api(app, version='1.0', title='Diabetes Prediction API',
-          description='A simple Diabetes Prediction API')
+api = Api(app, version='1.0', title='API de Prédiction du Diabète',
+          description='Une API simple pour la prédiction du diabète')
 
-ns = api.namespace('predict', description='Predictions operations')
+ns = api.namespace('predict', description='Opérations de prédiction')
+
 
 # Charger le modèle, le scaler pour l'âge et les noms des colonnes
-model = joblib.load('Random_Forest_model.pkl')
+model = joblib.load('Random_Forest_model_new.pkl')
 scaler_age = joblib.load('scaler_age_new.pkl')
-columns = joblib.load('columns.pkl')
+columns = joblib.load('colonnes.pkl')
 
 # Initialiser l'engin de recommandation
 recommendation_engine = RecommendationEngine()
 
 # Définir le modèle de données pour l'API
 prediction_model = ns.model('Prediction', {
-    'features': fields.List(fields.Integer, required=True, description='Features for prediction')
+    'features': fields.List(fields.Integer, required=True, description='Features pour la  prediction')
 })
 
 # Fonction pour sauvegarder les résultats dans un fichier CSV
@@ -52,10 +53,8 @@ class Predict(Resource):
             # Charger les données d'entrée
             data = request.get_json(force=True)
             if 'features' not in data or len(data['features']) != len(columns):
-                return jsonify({"error": f"Les caractéristiques doivent contenir les éléments suivants: {columns}"}), 400
-
+               return make_response(jsonify({"error": f"Les caractéristiques doivent contenir les éléments suivants: {columns}"}), 400)
             input_data = data['features']
-
             # Forcer la conversion en entiers
             input_data = [int(x) for x in input_data]
 
@@ -69,7 +68,6 @@ class Predict(Resource):
             # Effectuer la prédiction
             prediction = model.predict(input_df)
             prediction_proba = model.predict_proba(input_df)
-
             # Convertir les probabilités en pourcentage
             prediction_proba_percentage = [round(prob * 100, 2) for prob in prediction_proba[0]]
 
@@ -90,10 +88,10 @@ class Predict(Resource):
                 "recommendations": recommendations
             }
 
-            return jsonify(result)
+            return make_response(jsonify(result),200)
 
         except Exception as e:
-            return jsonify({"error": str(e)}), 400
+            return make_response(jsonify({"error": str(e)}), 400)
 
 @ns.route('/results')
 class Results(Resource):
@@ -112,7 +110,7 @@ class Results(Resource):
 class Stats(Resource):
     def get(self):
         """
-        Get basic statistics of the predictions
+        Recuperer  les statistiques des predictions
         """
         file_path = 'predictions.csv'
         if os.path.exists(file_path):
@@ -121,7 +119,7 @@ class Stats(Resource):
             class_0_count = df[df['prediction'] == 0].shape[0]
             class_1_count = df[df['prediction'] == 1].shape[0]
 
-            # Generate a pie chart
+            # Generer le  pie chart
             labels = 'Class 0', 'Class 1'
             sizes = [class_0_count, class_1_count]
             colors = ['lightblue', 'lightcoral']
@@ -130,9 +128,9 @@ class Stats(Resource):
             plt.figure(figsize=(6, 6))
             plt.pie(sizes, explode=explode, labels=labels, colors=colors,
                     autopct='%1.1f%%', shadow=True, startangle=140)
-            plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+            plt.axis('equal')
 
-            # Save the plot to a PNG image in memory
+            # Sauvegarder le char en png
             img = io.BytesIO()
             plt.savefig(img, format='png')
             img.seek(0)
@@ -154,3 +152,4 @@ api.add_namespace(ns, path='/predict')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+

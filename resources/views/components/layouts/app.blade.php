@@ -16,7 +16,9 @@
         </main>
 
 
-@stack('modals')
+        @stack('modals')
+
+        @livewire('notifications')
         @filamentScripts
 
         @livewireScripts

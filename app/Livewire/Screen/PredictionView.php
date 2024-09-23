@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Screen;
 
+use App\Models\MedicalData;
+use App\Models\PredictionResult;
 use Livewire\Component;
 use Filament\Forms\Components\{TextInput, Select,Grid,Radio, Wizard};
 use Filament\Forms\Components\MarkdownEditor;
@@ -13,6 +15,9 @@ use Illuminate\Contracts\View\View;
 use robertogallea\LaravelPython\Services\LaravelPython;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
+
+use Filament\Notifications\Actions\Action;
+use Filament\Notifications\Notification;
 
 
 
@@ -414,14 +419,44 @@ BLADE)
             $this->result =
             json_decode($response->getBody(), true);
 
+            if(auth()->user()!=null){
+
+                $this->SaveDatabase($data,$this->result);
+            }
+
+
             $this->form->fill();
 
         } catch (\Exception $e) {
+
+
 
             dd($e->getMessage());
 
             error_log($e->getMessage());
         }
+
+    }
+    public function SaveDatabase($data,  $result){
+
+
+        $medical = new MedicalData();
+
+        $medical->medical_data = $data;
+        $medical->user_id = auth()->id();
+
+        $medical->save();
+
+        $result = new PredictionResult();
+        $result->prediction = $this->result['prediction'];
+        $result->recommandations = $this->result['recommendations'];
+        $result->interprétation = $this->result['interpretation'];
+        $result->classe = $this->result['probability'];
+        $result->model_type = 'Random forest';
+        $result->medical_data_id = $medical->id;
+
+        $result->save();
+
 
     }
     public function render()
