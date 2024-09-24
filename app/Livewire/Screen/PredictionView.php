@@ -390,7 +390,7 @@ BLADE)
             // Préparer les données dans le format requis
             $features = ['features' => $data];
 
-            $response = $client->post('http://localhost:5000/predict', [
+            $response = $client->post('https://diabete-api-dd5701036696.herokuapp.com/predict', [
                 'json' => $features
             ]);
 
@@ -412,7 +412,7 @@ BLADE)
         try {
 
             $features = array_values($data);
-            $response = $client->post('http://localhost:5000/predict', [
+            $response = $client->post('https://diabete-api-dd5701036696.herokuapp.com/predict', [
                 'json' => ['features' => $features]
             ]);
 

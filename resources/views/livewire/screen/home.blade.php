@@ -20,6 +20,10 @@
                     class="px-6 py-4 text-lg font-semibold border border-gray-300 rounded-lg hover:text-white hover:transition hover:bg-blue-600">
                     Évaluer votre risque
                 </a>
+                <a href="{{route('evaluerRisqueGuest')}}" wire:navigate
+                    class="px-6 py-4 text-lg font-semibold border border-gray-300 rounded-lg hover:text-white hover:transition hover:bg-blue-600">
+                    Évaluer votre risque sans se connecter
+                </a>
 
                 <a href="{{route('recommandations')}}" wire:navigate
                     class="px-6 py-4 text-lg font-semibold border border-gray-300 rounded-lg hover:text-white hover:transition hover:bg-blue-600">

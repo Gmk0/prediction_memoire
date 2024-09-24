@@ -13,6 +13,8 @@ Route::get('/recommandations', \App\Livewire\Screen\RecommandationView::class)->
 
 Route::get('/bonne-pratiques', \App\Livewire\Screen\BonnePratique::class)->name('bonnesPratiques');
 
+Route::get('/evaluer-votre-risque-guest', \App\Livewire\Screen\PredictionView::class)->name('evaluerRisqueGuest');
+
 
 
 
