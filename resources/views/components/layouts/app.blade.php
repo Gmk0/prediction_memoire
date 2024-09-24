@@ -6,6 +6,7 @@
 
         <title>{{ $title ?? 'Page Title' }}</title>
         @vite('resources/css/app.css','resources/js/app.js')
+        <link rel="stylesheet" href="/build/assets/app-Be_aLcIk.css">
        @livewireStyles
        @filamentStyles
     </head>
@@ -22,5 +23,7 @@
         @filamentScripts
 
         @livewireScripts
+
+        <script src="/build/assets/app-D3Y-ymQv.js"></script>
     </body>
 </html>
