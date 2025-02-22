@@ -1,6 +1,6 @@
-<div class="flex items-center justify-center min-h-screen p-10">
+<div class="flex items-center justify-center min-h-screen p-4 lg:p-10">
     <div class="flex flex-col w-full overflow-hidden bg-white rounded-lg shadow-md lg:flex-row max-w-7xl">
-        <div class="p-8 bg-blue-100 lg:w-[40%]">
+        <div class="p-2 lg:p-8 bg-blue-100 lg:w-[40%]">
             <h1 class="mb-4 text-3xl font-bold text-blue-900">Prédiction du Risque de Diabète : Pourquoi c'est important
             </h1>
             <p class="mb-4 text-blue-800">La prédiction du risque de diabète de type 2 vous permet de prendre des
@@ -15,7 +15,7 @@
                 découvrez dès maintenant votre risque de diabète de type 2.</p>
         </div>
 
-        <div class="p-8 bg-white lg:w-[60%]">
+        <div class="lg:p-8 p-2 bg-white lg:w-[60%]">
             <form wire:submit.prevent='test' class="space-y-6">
                 {{$this->form}}
             </form>
