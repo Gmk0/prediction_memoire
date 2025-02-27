@@ -34,5 +34,15 @@ class MedicalData extends Model
     }
 
 
+    public function prediction()
+    {
+
+        return $this->hasOne(PredictionResult::class);
+    }
+
+
+
+
+
 
 }

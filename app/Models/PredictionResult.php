@@ -31,4 +31,9 @@ class PredictionResult extends Model
             'classe' => 'array',
         ];
     }
+
+    public function medicalData(){
+
+        return $this->belongsTo(MedicalData::class);
+    }
 }

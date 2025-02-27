@@ -17,6 +17,7 @@ class RecommandationFactory extends Factory
     public function definition(): array
     {
         return [
+
             //
         ];
     }

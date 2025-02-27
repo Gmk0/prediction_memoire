@@ -16,6 +16,11 @@ Route::get('/bonne-pratiques', \App\Livewire\Screen\BonnePratique::class)->name(
 Route::get('/evaluer-votre-risque-guest', \App\Livewire\Screen\PredictionView::class)->name('evaluerRisqueGuest');
 
 
+Route::get('/centre', \App\Livewire\Centre::class)->name('centre');
+
+
+
+
 
 
 Route::middleware([

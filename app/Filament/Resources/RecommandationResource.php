@@ -23,6 +23,17 @@ class RecommandationResource extends Resource
     {
         return $form
             ->schema([
+
+                 Forms\Components\TextInput::make('title'),
+                Forms\Components\Textarea::make('description')
+                    ->columnSpanFull(),
+
+                Forms\Components\RichEditor::make('content')
+                    ->columnSpanFull(),
+                Forms\Components\FileUpload::make('image_url'),
+                Forms\Components\TagsInput::make('variable_ass'),
+
+
                 //
             ]);
     }
@@ -30,7 +41,12 @@ class RecommandationResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
+            ->columns([Tables\Columns\TextColumn::make('title')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('description')
+                ->searchable(),
+                 Tables\Columns\TagsColumn::make('variable_ass')
+                ->searchable(),
                 //
             ])
             ->filters([
